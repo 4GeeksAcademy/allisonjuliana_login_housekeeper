@@ -7,6 +7,7 @@ const Signup = () => {
   const [password, setPassword] = useState('');
   const [id_branche, setIdBranche] = useState('');
   const [branches, setBranches] = useState([]); // Aquí guardamos las sucursales
+  const [emailError, setEmailError] = useState(''); // Estado para mostrar error en el email
   const navigate = useNavigate();
 
   const backendUrl = process.env.REACT_APP_BACKEND_URL || process.env.BACKEND_URL;
@@ -31,9 +32,28 @@ const Signup = () => {
     loadBranches();
   }, []);
 
+  const handleEmailChange = (e) => {
+    const value = e.target.value;
+    setEmail(value);
+  };
+
+  // Validación del email cuando el campo pierde el foco
+  const handleEmailBlur = () => {
+    if (!email.includes('@')) {
+      setEmailError('El email debe contener el símbolo "@"');
+    } else {
+      setEmailError('');
+    }
+  };
+
   const handleSignup = async () => {
     if (!nombre || !email || !password || !id_branche) {
       alert('Por favor completa todos los campos');
+      return;
+    }
+
+    if (emailError) {
+      alert('Por favor corrige los errores antes de continuar');
       return;
     }
 
@@ -84,9 +104,11 @@ const Signup = () => {
             type="email"
             className="form-control"
             value={email}
-            onChange={(e) => setEmail(e.target.value)}
+            onChange={handleEmailChange}
+            onBlur={handleEmailBlur} // Validamos cuando el campo pierde el foco
             placeholder="Ingresa tu email"
           />
+          {emailError && <small className="text-danger">{emailError}</small>}
         </div>
         <div className="form-group">
           <label>Contraseña</label>
@@ -113,7 +135,7 @@ const Signup = () => {
             ))}
           </select>
         </div>
-        <button className="btn btn-primary btn-block" onClick={handleSignup}>
+        <button className="btn btn-primary btn-block" onClick={handleSignup} disabled={emailError}>
           Registrarse
         </button>
         <div className="text-center mt-3">

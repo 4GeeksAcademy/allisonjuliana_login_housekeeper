@@ -14,8 +14,8 @@ const Login = () => {
       return;
     }
 
-    console.log('Email:', email);  // Verifica que el email sea el esperado
-    console.log('Password:', password);  // Verifica que la contraseña sea la esperada
+    console.log('Email:', email);
+    console.log('Password:', password);
 
     try {
       const response = await fetch(`${backendUrl}api/login`, {
@@ -31,7 +31,6 @@ const Login = () => {
 
       if (response.ok) {
         const data = await response.json();
-        // Guardar el token en localStorage o en un estado global
         localStorage.setItem('token', data.token);
         navigate('/private');
       } else {

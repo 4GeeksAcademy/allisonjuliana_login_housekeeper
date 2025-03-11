@@ -14,6 +14,7 @@ import Private from './pages/private';
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
+import ProtectedRoute from './pages/ProtectedRoute';
 
 //create your first component
 const Layout = () => {
@@ -35,7 +36,7 @@ const Layout = () => {
                         <Route element={<HouseKeeper />} path="/houseKeeper" />
                         <Route path="/login" element={<Login />} />
                         <Route path="/signup" element={<Signup />} />
-                        <Route path="/private" element={<Private />} />
+                        <Route path="/private" element={<ProtectedRoute><Private /></ProtectedRoute>}/>
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
