@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Private = () => {
+const PrivateHouseKeeper = () => {
   const navigate = useNavigate();
   
   const handleLogout = () => {
     localStorage.removeItem('token');
-    navigate('/login');
+    navigate('/loginHouseKeeper');
   };
 
   return (
@@ -26,4 +26,4 @@ const Private = () => {
   );
 };
 
-export default Private;
+export default PrivateHouseKeeper;

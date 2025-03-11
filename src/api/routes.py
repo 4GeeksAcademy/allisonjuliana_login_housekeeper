@@ -72,8 +72,8 @@ def get_branches():
     branches = Branches.query.all()
     return jsonify([branch.serialize() for branch in branches]), 200
 
-@api.route('/login', methods=['POST'])
-def login():
+@api.route('/loginHouseKeeper', methods=['POST'])
+def login_housekeeper():
     data = request.get_json()
     email = data.get('email')
     password = data.get('password')

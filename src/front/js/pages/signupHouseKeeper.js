@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Signup = () => {
+const SignupHouseKeeper = () => {
   const [nombre, setNombre] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -71,7 +71,7 @@ const Signup = () => {
       if (response.ok) {
         const data = await response.json();
         alert('Registro exitoso!');
-        navigate('/login');
+        navigate('/loginHouseKeeper');
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.message}`);
@@ -136,7 +136,7 @@ const Signup = () => {
           Registrarse
         </button>
         <div className="text-center mt-3">
-          <button className="btn btn-link" onClick={() => navigate('/login')}>
+          <button className="btn btn-link" onClick={() => navigate('/loginHouseKeeper')}>
             ¿Ya tienes cuenta? Inicia sesión
           </button>
         </div>
@@ -145,4 +145,4 @@ const Signup = () => {
   );
 };
 
-export default Signup;
+export default SignupHouseKeeper;

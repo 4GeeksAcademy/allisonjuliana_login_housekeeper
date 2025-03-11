@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
-const Login = () => {
+const LoginHouseKeeper = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const navigate = useNavigate();
@@ -18,7 +18,7 @@ const Login = () => {
     console.log('Password:', password);
 
     try {
-      const response = await fetch(`${backendUrl}api/login`, {
+      const response = await fetch(`${backendUrl}api/loginHouseKeeper`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -32,7 +32,7 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
         localStorage.setItem('token', data.token);
-        navigate('/private');
+        navigate('/privateHouseKeeper');
       } else {
         const errorData = await response.json();
         alert(`Error: ${errorData.error || 'Algo salió mal. Intenta nuevamente.'}`);
@@ -73,7 +73,7 @@ const Login = () => {
           Iniciar sesión
         </button>
         <div className="mt-3 text-center">
-          <button className="btn btn-link" onClick={() => navigate('/signup')}>
+          <button className="btn btn-link" onClick={() => navigate('/signupHouseKeeper')}>
             ¿No tienes cuenta? Regístrate
           </button>
         </div>
@@ -82,4 +82,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default LoginHouseKeeper;

@@ -20,7 +20,7 @@ export const Home = () => {
 				<Link to="/houseKeeper">Go to HouseKeeper Form</Link>
 			</div>
 			<div>
-				<Link to="/login">Go to login housekeeper Form</Link>
+				<Link to="/loginHouseKeeper">Go to login housekeeper Form</Link>
 			</div>
 			<p>
 				This boilerplate comes with lots of documentation:{" "}

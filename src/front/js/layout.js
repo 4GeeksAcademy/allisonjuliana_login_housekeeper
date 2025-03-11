@@ -8,13 +8,13 @@ import { Demo } from "./pages/demo";
 import { Single } from "./pages/single";
 import injectContext from "./store/appContext";
 
-import Login from "./pages/login";
-import Signup from "./pages/signup";
-import Private from './pages/private';
+import LoginHouseKeeper from "./pages/loginHouseKeeper";
+import SignupHouseKeeper from "./pages/signupHouseKeeper";
+import PrivateHouseKeeper from './pages/privateHouseKeeper';
 
 import { Navbar } from "./component/navbar";
 import { Footer } from "./component/footer";
-import ProtectedRoute from './pages/ProtectedRoute';
+import ProtectedPrivateHouseKeeper from './pages/ProtectedPrivateHouseKeeper';
 
 //create your first component
 const Layout = () => {
@@ -34,9 +34,9 @@ const Layout = () => {
                         <Route element={<Demo />} path="/demo" />
                         <Route element={<Single />} path="/single/:theid" />
                         <Route element={<HouseKeeper />} path="/houseKeeper" />
-                        <Route path="/login" element={<Login />} />
-                        <Route path="/signup" element={<Signup />} />
-                        <Route path="/private" element={<ProtectedRoute><Private /></ProtectedRoute>}/>
+                        <Route path="/loginHouseKeeper" element={<LoginHouseKeeper />} />
+                        <Route path="/signupHouseKeeper" element={<SignupHouseKeeper />} />
+                        <Route path="/privateHouseKeeper" element={<ProtectedPrivateHouseKeeper><PrivateHouseKeeper /></ProtectedPrivateHouseKeeper>}/>
                         <Route element={<h1>Not found!</h1>} />
                     </Routes>
                     <Footer />
