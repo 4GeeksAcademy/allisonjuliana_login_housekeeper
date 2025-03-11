@@ -6,19 +6,18 @@ const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [id_branche, setIdBranche] = useState('');
-  const [branches, setBranches] = useState([]); // Aquí guardamos las sucursales
-  const [emailError, setEmailError] = useState(''); // Estado para mostrar error en el email
+  const [branches, setBranches] = useState([]);
+  const [emailError, setEmailError] = useState('');
   const navigate = useNavigate();
 
   const backendUrl = process.env.REACT_APP_BACKEND_URL || process.env.BACKEND_URL;
 
-  // Función para cargar las sucursales desde el backend
   const loadBranches = async () => {
     try {
       const response = await fetch(`${backendUrl}/api/branches`);
       if (response.ok) {
         const data = await response.json();
-        setBranches(data); // Guardamos las sucursales en el estado
+        setBranches(data);
       } else {
         console.error('Error al cargar las sucursales:', response.status);
       }
@@ -27,7 +26,6 @@ const Signup = () => {
     }
   };
 
-  // Llamamos a loadBranches cuando el componente se monte
   useEffect(() => {
     loadBranches();
   }, []);
@@ -37,7 +35,6 @@ const Signup = () => {
     setEmail(value);
   };
 
-  // Validación del email cuando el campo pierde el foco
   const handleEmailBlur = () => {
     if (!email.includes('@')) {
       setEmailError('El email debe contener el símbolo "@"');
@@ -105,7 +102,7 @@ const Signup = () => {
             className="form-control"
             value={email}
             onChange={handleEmailChange}
-            onBlur={handleEmailBlur} // Validamos cuando el campo pierde el foco
+            onBlur={handleEmailBlur}
             placeholder="Ingresa tu email"
           />
           {emailError && <small className="text-danger">{emailError}</small>}
