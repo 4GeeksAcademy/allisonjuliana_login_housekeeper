@@ -16,7 +16,12 @@ export const Home = () => {
 			<div className="alert alert-info">
 				{store.message || "Loading message from the backend (make sure your python backend is running)..."}
 			</div>
-			<Link to="/houseKeeper">Go to HouseKeeper Form</Link>
+			<div>
+				<Link to="/houseKeeper">Go to HouseKeeper Form</Link>
+			</div>
+			<div>
+				<Link to="/login">Go to login housekeeper Form</Link>
+			</div>
 			<p>
 				This boilerplate comes with lots of documentation:{" "}
 				<a href="https://start.4geeksacademy.com/starters/react-flask">

@@ -5,11 +5,19 @@ from flask import Flask, request, jsonify, url_for, Blueprint
 from api.models import db, User, HouseKeeper, Branches
 from api.utils import generate_sitemap, APIException
 from flask_cors import CORS
+from werkzeug.security import check_password_hash, generate_password_hash
+
+import datetime
+import jwt
 
 api = Blueprint('api', __name__)
 
 # Allow CORS requests to this API
 CORS(api)
+
+# CORS(api, resources={r"/api/*": {"origins": "*"}})
+# Secret key for encoding and decoding JWT tokens (should be kept secret)
+SECRET_KEY = "your_secret_key"
 
 
 @api.route('/hello', methods=['POST', 'GET'])
@@ -31,10 +39,14 @@ def create_housekeeper():
     if not data.get('nombre') or not data.get('email') or not data.get('password'):
         return jsonify({"error": "Missing data"}), 400
 
+
+    # hashed_password = generate_password_hash(data['password'])
+
     new_housekeeper = HouseKeeper(
         nombre=data['nombre'],
         email=data['email'],
-        password=data['password'],  # En un proyecto real deberías cifrar la contraseña
+        password=data['password'],
+        # password=hashed_password,
         id_branche=data.get('id_branche')
     )
 
@@ -95,3 +107,33 @@ def delete_housekeeper(id):
 def get_branches():
     branches = Branches.query.all()
     return jsonify([branch.serialize() for branch in branches]), 200
+
+# Ruta de Login
+# Ruta para login
+@api.route('/login', methods=['POST'])
+def login():
+    data = request.get_json()
+    email = data.get('email')
+    password = data.get('password')
+
+    # Verificar si el email y la contraseña están presentes
+    if not email or not password:
+        return jsonify({"error": "Missing email or password"}), 400
+
+    # Buscar al HouseKeeper por email
+    housekeeper = HouseKeeper.query.filter_by(email=email).first()
+
+    if not housekeeper:
+        return jsonify({"error": "Invalid housekeeper credentials"}), 401
+
+    # Verificar si la contraseña es correcta (compara directamente, no necesitas un hash)
+    if housekeeper.password != password:
+        return jsonify({"error": "Invalid password credentials"}), 401
+
+    # Generar el token como antes
+    token = jwt.encode({
+        'housekeeper_id': housekeeper.id,
+        'exp': datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=5)
+    }, SECRET_KEY, algorithm='HS256')
+
+    return jsonify({'token': token}), 200
